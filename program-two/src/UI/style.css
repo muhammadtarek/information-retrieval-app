@@ -1,0 +1,56 @@
+/*
+  Docs navigation
+ */
+
+.docs-navigation--title {
+    -fx-font-size: 20px;
+}
+
+.docs-navigation--button {
+    -fx-cursor: hand;
+    -fx-border-radius: 4px;
+    -fx-focus-color: transparent;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-padding: 8px 16px;
+    -fx-background-color: #0070E0;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 600;
+}
+
+.docs-navigation--button:hover,
+.docs-navigation--button:pressed {
+    -fx-background-color: #007af5;
+
+}
+
+.docs-navigation--container {
+    -fx-background-color: #F7F9FA;
+}
+
+/*
+ Document label
+ */
+
+.document--name {
+    -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-padding: 8px 16px;
+    -fx-text-fill: #637282;
+    -fx-font-weight: 600;
+}
+
+.document--name:hover {
+    -fx-background-color: #0070E0;
+    -fx-text-fill: #fff;
+}
+
+/*
+ App container
+ */
+
+.app--container {
+    -fx-background-color: #fff;
+}
