@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import javax.print.DocFlavor;
 
 public class IR {
 
@@ -19,15 +21,16 @@ public class IR {
     public static HashMap<String, HashMap<String, HashSet<Integer>>> tokens;
     public static String[] query = null;
     public static HashMap<String, ArrayList<String>> allDocs = new HashMap<String, ArrayList<String>>();
-
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
+    public static HashSet<String> validDocs = new HashSet<String>();
+    
+    public static String positionIndex(String queryGui) throws UnsupportedEncodingException, IOException
+    {
         ArrayList Documets = new ArrayList();
         tokens = new HashMap<String, HashMap<String, HashSet<Integer>>>();
         String concatenatedDocs = "";
         String x = "";
         int i;
-
+        
         String target_dir = "docs/";
         File dir = new File(target_dir);
         File[] files = dir.listFiles();
@@ -49,20 +52,16 @@ public class IR {
         }
         concatenatedDocs = concatenatedDocs.substring(0, concatenatedDocs.length() - 3); // delete last - with 2 spaces
         System.out.println(concatenatedDocs);
-        System.out.print("Enter Your Query : ");
-        x = sc.nextLine();
-        x = x.toLowerCase();
         AllWordTemp = Arrays.asList(concatenatedDocs.split(" "));
-        query = x.split(" ");
+        query = queryGui.split(" ");
         for (String word : query) {
             tokens.put(word, rightPart(word));
         }
-        System.out.println(Arrays.asList(tokens));
-        System.out.println("-------------------------");
-        getValidDoc();
-
+        System.out.println(Arrays.asList(tokens).toString());
+        System.out.println("-------------------------");        
+        return getValidDoc();
     }
-
+    
     public static HashMap<String, HashSet<Integer>> rightPart(String word) {
         HashMap<String, HashSet<Integer>> subHashMap = new HashMap<String, HashSet<Integer>>();
         HashSet<Integer> places = new HashSet<Integer>();
@@ -86,12 +85,12 @@ public class IR {
         return subHashMap;
     }
 
-    public static void getValidDoc() {
+    public static String getValidDoc() {
         HashMap<String, HashSet<Integer>> subHashMap1 = new HashMap<String, HashSet<Integer>>();
         HashMap<String, HashSet<Integer>> subHashMap2 = new HashMap<String, HashSet<Integer>>();
         HashSet<Integer> places1 = new HashSet<Integer>();
         HashSet<Integer> places2 = new HashSet<Integer>();
-        HashSet<String> validDocs = new HashSet<String>();
+        
         List<String> firstWordDocuments = null; // intersect document will be stored in it
         List<String> secondWordDocuments = null;
         ArrayList<Boolean> boolList = null;
@@ -131,8 +130,7 @@ public class IR {
                 }
             }
         }
-
-        System.out.println("VALID DOCS -- > " + validDocs);
+        return validDocs.toString();
     }
 
 }
