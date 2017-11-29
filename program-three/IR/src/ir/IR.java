@@ -1,11 +1,14 @@
 package ir;
 
-import static java.lang.Boolean.TRUE;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Collections;
-import static java.util.Collections.list;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +20,7 @@ public class IR {
     public static String[] query = null;
     public static HashMap<String, ArrayList<String>> allDocs = new HashMap<String, ArrayList<String>>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         ArrayList Documets = new ArrayList();
         tokens = new HashMap<String, HashMap<String, HashSet<Integer>>>();
@@ -25,15 +28,27 @@ public class IR {
         String x = "";
         int i;
 
-        System.out.print("Enter Number of documents : ");
-        int docNumber = sc.nextInt();
-        x = sc.nextLine();
-        for (i = 0; i < docNumber; i++) {
-            Documets.add(sc.nextLine());
-            concatenatedDocs = concatenatedDocs + Documets.get(i) + " - ";
+        String target_dir = "docs/";
+        File dir = new File(target_dir);
+        File[] files = dir.listFiles();
+
+        int docNumbers = files.length;
+        for (File f : files) {
+            if (f.isFile()) {
+                FileInputStream inputStream;
+                inputStream = new FileInputStream(f);
+                String line;
+                byte[] data = new byte[(int) f.length()];
+                inputStream.read(data);
+                inputStream.close();
+                
+                String str = new String(data, "UTF-8");
+                Documets.add(str.replace("\n", "").replace("\r", " ")); // /r & /n for windows
+                concatenatedDocs = concatenatedDocs + Documets.get((Documets.size() - 1)) + " - "; // - is used to seperate documents later
+            }
         }
-        concatenatedDocs = concatenatedDocs.substring(0, concatenatedDocs.length() - 3);
-        //System.out.print(concatenatedDocs.split("-| ")[0]);
+        concatenatedDocs = concatenatedDocs.substring(0, concatenatedDocs.length() - 3); // delete last - with 2 spaces
+        System.out.println(concatenatedDocs);
         System.out.print("Enter Your Query : ");
         x = sc.nextLine();
         x = x.toLowerCase();
@@ -56,11 +71,11 @@ public class IR {
         int docNumber = 1;
 
         for (i = 0; i < AllWordTemp.size(); i++) {
-            if (AllWordTemp.get(i).equals(word)) {
+            if (AllWordTemp.get(i).equals(word)) { //put char index
                 places.add(wordIndex);
                 wordIndex++;
                 subHashMap.put("Doc(" + docNumber + ")", places);
-            } else if (AllWordTemp.get(i).equals("-")) {
+            } else if (AllWordTemp.get(i).equals("-")) { // if start second document
                 places = new HashSet<Integer>();
                 wordIndex = 1;
                 docNumber++;
@@ -89,28 +104,30 @@ public class IR {
             secondWordDocuments = new ArrayList<String>(subHashMap2.keySet());
             firstWordDocuments.retainAll(secondWordDocuments); // intersection documents 
         }
-        for (String docName : firstWordDocuments) {
-            boolList = new ArrayList<>();
-            for (i = 0; i < query.length - 1; i++) {
-                subHashMap1 = tokens.get(query[i]);
-                subHashMap2 = tokens.get(query[i + 1]);
-                places1 = subHashMap1.get(docName);
-                places2 = subHashMap2.get(docName);
-                //("subHashMap1 --> " + subHashMap1);
-                //("places 1 --> " + places1 + " -- " + docName);
-                if (places1 != null) {
-                    for (int index : places1) {
-                        index = index + 1;
-                        if (places2.contains(index)) {
-                            boolList.add(true);
-                        } else {
-                            boolList.add(false);
+        if (firstWordDocuments != null) {
+            for (String docName : firstWordDocuments) {
+                boolList = new ArrayList<>();
+                for (i = 0; i < query.length - 1; i++) {
+                    subHashMap1 = tokens.get(query[i]);
+                    subHashMap2 = tokens.get(query[i + 1]);
+                    places1 = subHashMap1.get(docName);
+                    places2 = subHashMap2.get(docName);
+                    //("subHashMap1 --> " + subHashMap1);
+                    //("places 1 --> " + places1 + " -- " + docName);
+                    if (places1 != null) {
+                        for (int index : places1) {
+                            index = index + 1;
+                            if (places2.contains(index)) {
+                                boolList.add(true);
+                            } else {
+                                boolList.add(false);
+                            }
                         }
                     }
-                }
-                //System.out.println("******** "+docName + " -- " + boolList);
-                if (Collections.frequency(boolList, true) == (query.length - 1)) {
-                    validDocs.add(docName);
+                    //System.out.println("******** "+docName + " -- " + boolList);
+                    if (Collections.frequency(boolList, true) == (query.length - 1)) {
+                        validDocs.add(docName);
+                    }
                 }
             }
         }
