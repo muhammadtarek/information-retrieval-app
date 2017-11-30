@@ -1,5 +1,5 @@
 
-package task2;
+package Operations;
 import com.fathzer.soft.javaluator.*;
 import java.util.Arrays;
 import java.util.HashSet;
