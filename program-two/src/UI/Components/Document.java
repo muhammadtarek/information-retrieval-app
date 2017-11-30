@@ -1,12 +1,14 @@
 package UI.Components;
 
-import javafx.scene.control.Label;
+import UI.App;
+import UI.Containers.DocumentDetails;
+import javafx.scene.control.Button;
 
 public class Document {
 
     private String documentName;
     private String documentData;
-    private Label documentLabel;
+    private Button documentLabel;
 
     public Document(String documentName, String documentData) {
         this.documentName = documentName;
@@ -16,11 +18,17 @@ public class Document {
     }
 
     private void render() {
-        documentLabel = new Label(this.documentName);
+        documentLabel = new Button(this.documentName);
         documentLabel.getStyleClass().add("document--name");
+        documentLabel.setOnAction(e -> {
+            App.showDocumentDetails();
+            DocumentDetails.setDocumentContent(this.documentData);
+            DocumentDetails.setDocumentName(this.documentName);
+            DocumentDetails.setDocumentTokes((this.documentData));
+        });
     }
 
-    public Label getDocumentLabel() {
+    public Button getDocumentLabel() {
         return this.documentLabel;
     }
 

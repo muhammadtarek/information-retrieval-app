@@ -1,10 +1,13 @@
 package UI.Containers;
 
 import UI.Components.Document;
+import UI.Components.Title;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
@@ -26,10 +29,8 @@ public class DocsNavigator {
 
     private void render() {
         // Document title
-        Label docsTitle = new Label("Documents");
-        docsTitle.getStyleClass().add("docs-navigation--title");
-        docsTitle.setAlignment(Pos.BASELINE_LEFT);
-        GridPane.setConstraints(docsTitle, 0, 0);
+        Title docsTitle = new Title("Documents");
+        GridPane.setConstraints(docsTitle.getTitle(), 0, 0);
 
         // Upload document button
         Button uploadButton = new Button("Upload");
@@ -56,13 +57,22 @@ public class DocsNavigator {
 
         // Header container
         GridPane headerContainer = new GridPane();
+
+        headerContainer.getColumnConstraints()
+            .addAll(new ColumnConstraints(), new ColumnConstraints());
+        headerContainer.getColumnConstraints().get(0).setPercentWidth(60);
+        headerContainer.getColumnConstraints().get(1).setPercentWidth(40);
+        headerContainer.getColumnConstraints().get(1).setHalignment(HPos.RIGHT);
+
         headerContainer.setPadding(new Insets(30));
-        headerContainer.getChildren().addAll(docsTitle, uploadButton);
+        headerContainer.getChildren().addAll(docsTitle.getTitle(), uploadButton);
         GridPane.setConstraints(headerContainer, 0, 0);
 
         // Docs list container
         documents = new ArrayList<>();
         docsList = new GridPane();
+        docsList.setPadding(new Insets(0, 30, 30, 30));
+        docsList.setVgap(10);
         for (Document document : documents) {
             GridPane.setConstraints(document.getDocumentLabel(), 0, documents.size());
             docsList.getChildren().add(document.getDocumentLabel());
@@ -71,6 +81,8 @@ public class DocsNavigator {
 
         // Docs navigator container
         docsNavigatorContainer = new GridPane();
+        docsNavigatorContainer.getColumnConstraints().add(new ColumnConstraints());
+        docsNavigatorContainer.getColumnConstraints().get(0).setPercentWidth(100);
         docsNavigatorContainer.getStyleClass().add("docs-navigation--container");
         docsNavigatorContainer.getChildren().addAll(headerContainer, docsList);
     }
