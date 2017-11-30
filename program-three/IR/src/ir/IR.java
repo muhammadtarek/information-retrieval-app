@@ -36,7 +36,7 @@ public class IR {
         File[] files = dir.listFiles();
 
         int docNumbers = files.length;
-        for (File f : files) {
+        for (File f : files) { //Read each file in string
             if (f.isFile()) {
                 FileInputStream inputStream;
                 inputStream = new FileInputStream(f);
@@ -51,8 +51,8 @@ public class IR {
             }
         }
         concatenatedDocs = concatenatedDocs.substring(0, concatenatedDocs.length() - 3); // delete last - with 2 spaces
-        System.out.println(concatenatedDocs);
-        AllWordTemp = Arrays.asList(concatenatedDocs.split(" "));
+        System.out.println(concatenatedDocs.toLowerCase());
+        AllWordTemp = Arrays.asList(concatenatedDocs.toLowerCase().split(" "));
         query = queryGui.split(" ");
         for (String word : query) {
             tokens.put(word, rightPart(word));
@@ -124,7 +124,7 @@ public class IR {
                         }
                     }
                     //System.out.println("******** "+docName + " -- " + boolList);
-                    if (Collections.frequency(boolList, true) == (query.length - 1)) {
+                    if (Collections.frequency(boolList, true) >= (query.length - 1)) {
                         validDocs.add(docName);
                     }
                 }

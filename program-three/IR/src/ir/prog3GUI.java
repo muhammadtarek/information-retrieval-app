@@ -5,7 +5,9 @@
  */
 package ir;
 
+import static ir.IR.tokens;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -17,6 +19,7 @@ import jdk.nashorn.internal.parser.TokenKind;
  * @author Mohammed Khairala
  */
 public class prog3GUI extends javax.swing.JFrame {
+
     public static String query;
 
     /**
@@ -58,10 +61,12 @@ public class prog3GUI extends javax.swing.JFrame {
         jLabel1.setText("Enter Query");
 
         positionTextArea.setColumns(20);
+        positionTextArea.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
         positionTextArea.setRows(5);
         jScrollPane1.setViewportView(positionTextArea);
 
         validTextArea.setColumns(20);
+        validTextArea.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
         validTextArea.setRows(5);
         jScrollPane2.setViewportView(validTextArea);
 
@@ -105,7 +110,7 @@ public class prog3GUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(queryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,12 +129,24 @@ public class prog3GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_queryTextFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         query = queryTextField.getText().toLowerCase();
+        query = queryTextField.getText().toLowerCase();
         try {
             IR.tokens = new HashMap<>();
             IR.validDocs = new HashSet<>();
             IR.positionIndex(query);
-            positionTextArea.setText(IR.tokens.toString());
+            int i = 0;
+            String[] queryArr = query.split(" ");
+            String improvedPosition = "";
+            for (i = 0; i < queryArr.length; i++) {
+                improvedPosition = improvedPosition + "\n" + queryArr[i] + " ---> " + tokens.get(queryArr[i]);
+            }
+            
+            if (queryArr.length <= 1) {
+                positionTextArea.setText("\n\n\t!! PLEASE ENTER PHRASE QUERY !!");
+            } else {
+                positionTextArea.setText(improvedPosition);
+            }
+
             validTextArea.setText(IR.validDocs.toString());
         } catch (IOException ex) {
             Logger.getLogger(prog3GUI.class.getName()).log(Level.SEVERE, null, ex);
