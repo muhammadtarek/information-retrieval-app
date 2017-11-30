@@ -30,18 +30,13 @@ public class BooleanModel {
 
     }
 
-    
-
-    public void setTokens(List<Document> Docs)
-    {
+    public void setTokens(List<Document> Docs) {
         for (Document Doc : Docs) {
             ArrayList<String> tmp = Doc.getTokens();
             tmp.removeAll(StopWords);
             Tokens.addAll(tmp);
         }
     }
-    
-     
 
     public Map<String, String> getMatrix(List<Document> Docs) {
         setTokens(Docs);
@@ -57,18 +52,22 @@ public class BooleanModel {
     }
 
     public String ManipulateQuery(String query) {
-
+        String empty = matrix.entrySet().iterator().next().getValue().replace("1", "0");
+        for (String x : Arrays.asList(query.toLowerCase().replaceAll("and", "").replaceAll("or", "").replaceAll("not", "").replaceAll("\\(", "").replaceAll("\\)", "").split("\\s+"))) {
+            if (!matrix.containsKey(x)) {
+                query = query.replace(x, empty);
+            }
+        }
         for (Map.Entry<String, String> entry : matrix.entrySet()) {
             query = query.replaceAll(entry.getKey(), entry.getValue());
             //System.out.println(entry.getKey() + " : " + entry.getValue());
         }
-        query=query.toLowerCase().replaceAll("and", "&").replaceAll("or", "|").replaceAll("not", "!");
+        query = query.toLowerCase().replaceAll("and", "&").replaceAll("or", "|").replaceAll("not", "!");
+        System.out.println(query);
         return query;
     }
-    
-    
-    public ArrayList<Document> GetDocumnetsNames(ArrayList<Document> Docs)
-    {
+
+    public ArrayList<Document> GetDocumnetsNames(ArrayList<Document> Docs) {
         ArrayList<Document> result = new ArrayList<>();
         for (int i = 0; i < VectorResult.length(); i++) {
             if (VectorResult.charAt(i) == '1') {
@@ -77,15 +76,12 @@ public class BooleanModel {
         }
         return result;
     }
-    
 
     public String QueryResult(ArrayList<Document> Docs, String query) {
-     
-            query = ManipulateQuery(query);
-            System.out.println(query);
-            VectorResult = SimpleBooleanEvaluator.booleanResult(query);
-            System.out.println(VectorResult);
-        
-        return VectorResult;
+        query = ManipulateQuery(query);
+        //System.out.println(query);
+        VectorResult = SimpleBooleanEvaluator.booleanResult(query);
+        //System.out.println(VectorResult);
+        return query + " = " + VectorResult;
     }
 }
