@@ -1,5 +1,5 @@
 
-package task2;
+package Operations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
