@@ -9,8 +9,10 @@ public class Document {
     private String documentName;
     private String documentData;
     private Button documentLabel;
+    private Operations.Document document;
 
     public Document(String documentName, String documentData) {
+        document = new Operations.Document(documentName, documentData);
         this.documentName = documentName;
         this.documentData = documentData;
 
@@ -24,7 +26,7 @@ public class Document {
             App.showDocumentDetails();
             DocumentDetails.setDocumentContent(this.documentData);
             DocumentDetails.setDocumentName(this.documentName);
-            DocumentDetails.setDocumentTokes((this.documentData));
+            DocumentDetails.setDocumentTokes(document.getTokens());
         });
     }
 

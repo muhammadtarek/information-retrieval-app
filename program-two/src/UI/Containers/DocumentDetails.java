@@ -55,13 +55,8 @@ public class DocumentDetails {
    documentContentViewer.setText(fileContent);
   }
 
-  public static void setDocumentTokes(String fileContent) {
-    ArrayList<String> test = new ArrayList<>();
-    test.add("Hello");
-    test.add("Hello");
-    test.add("Hello");
-    test.add("Hello");
-    tokens.setTokens(test);
+  public static void setDocumentTokes(ArrayList<String> docTokens) {
+    tokens.setTokens(docTokens);
   }
 
   public GridPane getDocumentDetailsContainer() {
