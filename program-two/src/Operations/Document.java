@@ -1,5 +1,5 @@
 
-package task2;
+package Operations;
 
 import java.util.*;
 /**
@@ -9,9 +9,9 @@ import java.util.*;
 public class Document {
     private String docName;
     private String docContent;
-    private static final ArrayList<String> STOPWORDS = new ArrayList<>(Arrays.asList(new String[]{"a", 
+    private static final ArrayList<String> STOPWORDS = new ArrayList<>(Arrays.asList("a",
         "an", "if", "the", "we", "and", "or", "about", "above", "across", "after", "all", "also",
-        "although","another", "any", "am", "is", "are", "at", "be", "as", "at", "but", "by", "do", "where"}));
+        "although","another", "any", "am", "is", "are", "at", "be", "as", "at", "but", "by", "do", "where"));
     
     public Document(String name , String content){
         docName = name;
