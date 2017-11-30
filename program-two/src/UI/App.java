@@ -42,7 +42,7 @@ public class App extends Application{
         detailsPane.getColumnConstraints().add(new ColumnConstraints());
         detailsPane.getColumnConstraints().get(0).setPercentWidth(100);
         detailsPane.setPadding(new Insets(30));
-        detailsPane.getChildren().addAll(searchBar.getSearchBar(), documentDetails);
+        detailsPane.getChildren().addAll(searchBar.getSearchBar());
 
         RowConstraints fullHeight = new RowConstraints();
         fullHeight.setPercentHeight(100);
@@ -76,12 +76,13 @@ public class App extends Application{
 
     public static void showDocumentDetails() {
       detailsPane.getChildren().remove(queryRunner);
+      detailsPane.getChildren().remove(documentDetails);
       detailsPane.getChildren().add(documentDetails);
-
     }
 
     public static void showQueryRunner() {
-      detailsPane.getChildren().add(queryRunner);
       detailsPane.getChildren().remove(documentDetails);
+      detailsPane.getChildren().remove(queryRunner);
+      detailsPane.getChildren().add(queryRunner);
     }
 }
