@@ -53,7 +53,8 @@ public class BooleanModel {
 
     public String ManipulateQuery(String query) {
         String empty = matrix.entrySet().iterator().next().getValue().replace("1", "0");
-        for (String x : Arrays.asList(query.toLowerCase().replaceAll("and", "").replaceAll("or", "").replaceAll("not", "").replaceAll("\\(", "").replaceAll("\\)", "").split("\\s+"))) {
+        for (String x : Arrays.asList(query.toLowerCase().replaceAll(" and ", " ").replaceAll(" or ", " ").replaceAll(" not ", " ").replaceAll("\\(", "").replaceAll("\\)", "").split("\\s+"))) {
+            System.out.println(x);
             if (!matrix.containsKey(x)) {
                 query = query.replace(x, empty);
             }
@@ -62,6 +63,7 @@ public class BooleanModel {
             query = query.replaceAll(entry.getKey(), entry.getValue());
             //System.out.println(entry.getKey() + " : " + entry.getValue());
         }
+        System.out.println(query);
         query=query.toLowerCase().replaceAll(" and ", " & ").replaceAll(" or ", " | ").replaceAll(" not ", " ! ");
         System.out.println(query);
         return query;
