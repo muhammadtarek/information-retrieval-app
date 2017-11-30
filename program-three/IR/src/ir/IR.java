@@ -20,22 +20,20 @@ public class IR {
     public static List AllWordTemp;
     public static HashMap<String, HashMap<String, HashSet<Integer>>> tokens;
     public static String[] query = null;
-    public static HashMap<String, ArrayList<String>> allDocs = new HashMap<String, ArrayList<String>>();
-    public static HashSet<String> validDocs = new HashSet<String>();
-    
-    public static String positionIndex(String queryGui) throws UnsupportedEncodingException, IOException
-    {
+    public static HashMap<String, ArrayList<String>> allDocs = new HashMap<>();
+    public static HashSet<String> validDocs = new HashSet<>();
+
+    public static String positionIndex(String queryGui) throws UnsupportedEncodingException, IOException {
         ArrayList Documets = new ArrayList();
-        tokens = new HashMap<String, HashMap<String, HashSet<Integer>>>();
+        tokens = new HashMap<>();
         String concatenatedDocs = "";
         String x = "";
         int i;
-        
+
         String target_dir = "docs/";
         File dir = new File(target_dir);
         File[] files = dir.listFiles();
 
-        int docNumbers = files.length;
         for (File f : files) { //Read each file in string
             if (f.isFile()) {
                 FileInputStream inputStream;
@@ -44,7 +42,7 @@ public class IR {
                 byte[] data = new byte[(int) f.length()];
                 inputStream.read(data);
                 inputStream.close();
-                
+
                 String str = new String(data, "UTF-8");
                 Documets.add(str.replace("\n", "").replace("\r", " ")); // /r & /n for windows
                 concatenatedDocs = concatenatedDocs + Documets.get((Documets.size() - 1)) + " - "; // - is used to seperate documents later
@@ -58,13 +56,13 @@ public class IR {
             tokens.put(word, rightPart(word));
         }
         System.out.println(Arrays.asList(tokens).toString());
-        System.out.println("-------------------------");        
+        System.out.println("-------------------------");
         return getValidDoc();
     }
-    
+
     public static HashMap<String, HashSet<Integer>> rightPart(String word) {
-        HashMap<String, HashSet<Integer>> subHashMap = new HashMap<String, HashSet<Integer>>();
-        HashSet<Integer> places = new HashSet<Integer>();
+        HashMap<String, HashSet<Integer>> subHashMap = new HashMap<>();
+        HashSet<Integer> places = new HashSet<>();
         int i;
         int wordIndex = 1;
         int docNumber = 1;
@@ -86,11 +84,11 @@ public class IR {
     }
 
     public static String getValidDoc() {
-        HashMap<String, HashSet<Integer>> subHashMap1 = new HashMap<String, HashSet<Integer>>();
-        HashMap<String, HashSet<Integer>> subHashMap2 = new HashMap<String, HashSet<Integer>>();
-        HashSet<Integer> places1 = new HashSet<Integer>();
-        HashSet<Integer> places2 = new HashSet<Integer>();
-        
+        HashMap<String, HashSet<Integer>> subHashMap1 = new HashMap<>();
+        HashMap<String, HashSet<Integer>> subHashMap2 = new HashMap<>();
+        HashSet<Integer> places1 = new HashSet<>();
+        HashSet<Integer> places2 = new HashSet<>();
+
         List<String> firstWordDocuments = null; // intersect document will be stored in it
         List<String> secondWordDocuments = null;
         ArrayList<Boolean> boolList = null;
@@ -99,8 +97,8 @@ public class IR {
         {
             subHashMap1 = tokens.get(query[i]);
             subHashMap2 = tokens.get(query[i + 1]);
-            firstWordDocuments = new ArrayList<String>(subHashMap1.keySet());
-            secondWordDocuments = new ArrayList<String>(subHashMap2.keySet());
+            firstWordDocuments = new ArrayList<>(subHashMap1.keySet());
+            secondWordDocuments = new ArrayList<>(subHashMap2.keySet());
             firstWordDocuments.retainAll(secondWordDocuments); // intersection documents 
         }
         if (firstWordDocuments != null) {
@@ -132,29 +130,4 @@ public class IR {
         }
         return validDocs.toString();
     }
-
 }
-
-/*
- mohd mohd khairala
- mohd kmal mohd khairala
- ali mohd
- magdy mohd khairala
- ahmed yaser
-
- new home sales top forecasts new home sales rise
- home home sales rise in july new home new home new home
- increase in home sales in july
- july new home sales rise
-
- a b c e d
- x r q g e
- a b c d g
- w b t w q
-
- a b c d e f
- b c e f g
- a b c d e g
- b c d e j
-
- */
