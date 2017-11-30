@@ -63,6 +63,9 @@ public class BooleanModel {
             //System.out.println(entry.getKey() + " : " + entry.getValue());
         }
         query = query.toLowerCase().replaceAll("and", "&").replaceAll("or", "|").replaceAll("not", "!");
+=======
+        query=query.toLowerCase().replaceAll(" and ", " & ").replaceAll(" or ", " | ").replaceAll(" not ", " ! ");
+>>>>>>> e83fdb80206423decc53e0526eaca1531595e772
         System.out.println(query);
         return query;
     }
