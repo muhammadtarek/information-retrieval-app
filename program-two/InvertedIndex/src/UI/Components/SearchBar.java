@@ -28,15 +28,17 @@ public class SearchBar {
     search.setOnKeyReleased(e ->
     {
       String searchQuery = search.getText();
-
+      searchQuery = searchQuery.replaceAll("[()]", "").toLowerCase();
       List<String> myList = new ArrayList<String>(Arrays.asList(searchQuery.split(" ")));
-      invertedIndex.setQueryTokens((ArrayList<String>) myList);
+      invertedIndex.setQueryTokens((ArrayList<String>) myList);     
       App.showQueryRunner();
+      
       QueryRunner.loadTokensList(invertedIndex.getQueryPostingList());
 
 
       if (e.getCode().equals(KeyCode.ENTER))
       {
+          System.out.println("manipulated query: " + invertedIndex.manipulateQuery(searchQuery));  
         QueryRunner.loadMatchedDocuments(SimpleBooleanEvaluator.booleanResult(invertedIndex.manipulateQuery(searchQuery)));
       }
     });

@@ -45,11 +45,12 @@ public class InvertedIndex {
     
     public String manipulateQuery(String query){
         query = query.toLowerCase()
-            .replaceAll(" and ", " & ")
-            .replaceAll(" or ", " | ")
-            .replaceAll(" not ", " ~ ");
+            .replaceAll("\\band\\b", " & ")
+            .replaceAll("\\bor\\b", " | ")
+            .replaceAll("\\bnot\\b", " ~ ");
+        System.out.println("query is " + query);
         for(String token : queryTokens){
-            query =  query.replaceAll(token, String.join("," , index.getOrDefault(token,new LinkedHashSet<>()).toString()));
+            query =  query.replaceAll("\\b"+token+"\\b", String.join("," , index.getOrDefault(token,new LinkedHashSet<>()).toString().replaceAll("\\s+", "")));
         }
         query = query.replaceAll("\\[", "").replaceAll("\\]", "");
         return query;

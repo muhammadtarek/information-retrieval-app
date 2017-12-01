@@ -85,4 +85,8 @@ public class App extends Application{
       detailsPane.getChildren().remove(queryRunner);
       detailsPane.getChildren().add(queryRunner);
     }
+    
+     public static void main(String[] args) {
+        launch(args);
+    }
 }
