@@ -1,5 +1,6 @@
 package UI.Components;
 
+import Operations.InvertedIndex;
 import UI.App;
 import UI.Containers.DocumentDetails;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ public class Document {
 
     public Document(String documentName, String documentData) {
         document = new Operations.Document(documentName, documentData);
+        InvertedIndex.getInstance().buildIndex(document);
         this.documentName = documentName;
         this.documentData = documentData;
 

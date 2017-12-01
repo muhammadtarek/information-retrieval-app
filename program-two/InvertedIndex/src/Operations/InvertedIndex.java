@@ -10,10 +10,12 @@ import java.util.LinkedHashSet;
  * @author mohamed
  */
 public class InvertedIndex {
+
+    private static InvertedIndex instance;
     private HashMap<String,LinkedHashSet<Document>> index;
     private ArrayList<String> queryTokens;
     
-    public InvertedIndex(){
+    private InvertedIndex(){
         index = new HashMap<>();
         queryTokens = new ArrayList<>();
     }
@@ -42,13 +44,26 @@ public class InvertedIndex {
     }
     
     public String manipulateQuery(String query){
-        query = query.toLowerCase().replaceAll(" & ", " && ").replaceAll(" | ", " || ");
+        query = query.toLowerCase()
+            .replaceAll(" and ", " & ")
+            .replaceAll(" or ", " | ")
+            .replaceAll(" not ", " ~ ");
         for(String token : queryTokens){
             query =  query.replaceAll(token, String.join("," , index.getOrDefault(token,new LinkedHashSet<>()).toString()));
         }
         query = query.replaceAll("\\[", "").replaceAll("\\]", "");
         return query;
     }
-    
-    
+
+  public void setQueryTokens(ArrayList<String> queryTokens) {
+    this.queryTokens = queryTokens;
+  }
+
+  public static InvertedIndex getInstance() {
+      if (instance == null) {
+        instance = new InvertedIndex();;
+      }
+
+      return  instance;
+    }
 }

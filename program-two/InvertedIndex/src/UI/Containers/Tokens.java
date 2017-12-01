@@ -35,6 +35,10 @@ class Tokens {
     this.loadTokens();
   }
 
+  void clear() {
+    tokensContainer.getChildren().clear();
+  }
+
   GridPane getTokensContainer() {
     return tokensContainer;
   }
