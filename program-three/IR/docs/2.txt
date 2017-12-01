@@ -1,0 +1,4 @@
+Goal of Information Retrieval
+is to retrieve all and only the relevant 
+documents in a large collections for a particular 
+user with a particular need for information

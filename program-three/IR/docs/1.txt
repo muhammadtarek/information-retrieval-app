@@ -1,0 +1,4 @@
+Information Retrieval 
+is finding material of an unstructured 
+nature that satisfies an information need 
+from within large collections
