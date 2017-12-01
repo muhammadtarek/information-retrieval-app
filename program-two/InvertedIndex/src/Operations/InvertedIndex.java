@@ -10,18 +10,15 @@ import java.util.LinkedHashSet;
  * @author mohamed
  */
 public class InvertedIndex {
-    private LinkedHashSet<Document> postings;//to maintain the order of insertion when retrieving items
     private HashMap<String,LinkedHashSet<Document>> index;
     private ArrayList<String> queryTokens;
     
     public InvertedIndex(){
-        postings = new LinkedHashSet<>();
         index = new HashMap<>();
         queryTokens = new ArrayList<>();
     }
     
     public void buildIndex(Document doc){
-        postings.add(doc);
         for(String token : doc.getTokens()){
             if(!index.containsKey(token)){
                 //case new token
@@ -45,7 +42,7 @@ public class InvertedIndex {
     }
     
     public String manipulateQuery(String query){
-        query = query.toLowerCase().replaceAll(" and ", " & ").replaceAll(" or ", " | ").replaceAll(" not ", " ~ ");
+        query = query.toLowerCase().replaceAll(" & ", " && ").replaceAll(" | ", " || ");
         for(String token : queryTokens){
             query =  query.replaceAll(token, String.join("," , index.getOrDefault(token,new LinkedHashSet<>()).toString()));
         }

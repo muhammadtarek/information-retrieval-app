@@ -10,8 +10,8 @@ import java.util.LinkedHashSet;
  * @author mohamed
  */
 public class SimpleBooleanEvaluator extends AbstractEvaluator<String> {
-    public final static Operator UNION = new Operator("|", 2, Operator.Associativity.LEFT, 1);
-    public final static Operator INTERSECT = new Operator("&", 2, Operator.Associativity.LEFT, 1);
+    public final static Operator UNION = new Operator("||", 2, Operator.Associativity.LEFT, 1);
+    public final static Operator INTERSECT = new Operator("&&", 2, Operator.Associativity.LEFT, 1);
     public final static Operator DIFFERENCE = new Operator("~", 2, Operator.Associativity.LEFT, 1);
     private static final Parameters PARAMETERS;
     
