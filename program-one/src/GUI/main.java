@@ -372,6 +372,7 @@ public class main extends javax.swing.JFrame {
             String data = "";
             
              ArrayList<Document> DocNames=booleanModel.GetDocumnetsNames(allDocs);
+             
             if (DocNames.isEmpty()) {
                 data = "No matched documents !";
             }
@@ -389,7 +390,7 @@ public class main extends javax.swing.JFrame {
             TA_Program2_Result.setText(" ");
             TF_Bitwise_function.setText(" ");
             matrix = booleanModel.getMatrix(allDocs);
-            System.out.println(matrix);
+            //System.out.println(matrix);
             for (Map.Entry<String, String> entry : matrix.entrySet()) {
                 Table_Program2_model.addRow(new String[]{entry.getKey(), entry.getValue().replaceAll(".", "$0   ")});
                 //System.out.println(entry.getKey() + " : " + entry.getValue());
