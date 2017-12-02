@@ -38,7 +38,7 @@ public class SearchBar {
 
       if (e.getCode().equals(KeyCode.ENTER))
       {
-          System.out.println("manipulated query: " + invertedIndex.manipulateQuery(searchQuery));  
+          //System.out.println("manipulated query: " + invertedIndex.manipulateQuery(searchQuery));  
         QueryRunner.loadMatchedDocuments(SimpleBooleanEvaluator.booleanResult(invertedIndex.manipulateQuery(searchQuery)));
       }
     });

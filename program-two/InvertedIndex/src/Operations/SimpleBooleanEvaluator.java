@@ -37,29 +37,29 @@ public class SimpleBooleanEvaluator extends AbstractEvaluator<String> {
         String result="";
         if(operator == INTERSECT){
             LinkedHashSet<String> o1 = new LinkedHashSet<>(Arrays.asList(operands.next().split(",")));
-            System.out.println("o1 is : " + o1.toString());
+            //System.out.println("o1 is : " + o1.toString());
             LinkedHashSet<String> o2 = new LinkedHashSet<>(Arrays.asList(operands.next().split(",")));
-            System.out.println("o2 is : " + o2.toString());
+            //System.out.println("o2 is : " + o2.toString());
             o1.retainAll(o2);
-            System.out.println("op is intersect and result is " + o1.toString());
+            //System.out.println("op is intersect and result is " + o1.toString());
             return String.join("," , o1);
         }
         else if(operator == UNION){
             LinkedHashSet<String> o1 = new LinkedHashSet<>(Arrays.asList(operands.next().split(",")));
-            System.out.println("o1 is : " + o1.toString());
+            //System.out.println("o1 is : " + o1.toString());
             LinkedHashSet<String> o2 = new LinkedHashSet<>(Arrays.asList(operands.next().split(",")));
-            System.out.println("o2 is : " + o2.toString());
+            //System.out.println("o2 is : " + o2.toString());
             o1.addAll(o2);
-            System.out.println("op is union and result is " + o1.toString());
+            //System.out.println("op is union and result is " + o1.toString());
             return String.join("," , o1);
         }
         else if(operator == DIFFERENCE){
             LinkedHashSet<String> o1 = new LinkedHashSet<>(Arrays.asList(operands.next().split(",")));
-            System.out.println("o1 is : " + o1.toString());
+            //System.out.println("o1 is : " + o1.toString());
             LinkedHashSet<String> o2 = new LinkedHashSet<>(Arrays.asList(operands.next().split(",")));
-            System.out.println("o2 is : " + o2.toString());
+            //System.out.println("o2 is : " + o2.toString());
             o1.removeAll(o2);
-            System.out.println("op is diff and result is " + o1.toString());
+            //System.out.println("op is diff and result is " + o1.toString());
             return String.join("," , o1);
         }
         else

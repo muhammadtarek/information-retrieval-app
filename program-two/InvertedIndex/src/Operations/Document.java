@@ -10,7 +10,7 @@ public class Document {
     private String docName;
     private String docContent;
     private static final ArrayList<String> SPECIALCHARACTERS = new ArrayList<>(Arrays.asList("&","@","/",
-            "\\","$","#","%"));
+            "\\","$","#","%","|","~"));
     /*
     private static final ArrayList<String> STOPWORDS = new ArrayList<>(Arrays.asList("a",
         "an", "if", "the", "we", "and", "or", "about", "above", "across", "after", "all", "also",
