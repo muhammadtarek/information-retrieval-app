@@ -30,10 +30,12 @@ public class QueryRunner {
     // Matched documents
     matchedDocuments = new Tokens();
     GridPane.setConstraints(matchedDocuments.getTokensContainer(), 0, 1);
+    GridPane.setMargin(matchedDocuments.getTokensContainer(), new Insets(0, 0, 30, 0));
     
     // Tokens list title
     Title tokensListTitle = new Title("Posting lists");
     GridPane.setConstraints(tokensListTitle.getTitle(), 0, 2);
+    GridPane.setMargin(tokensListTitle.getTitle(), new Insets(0, 0, 30, 0));
 
     // Tokens list
     tokensList = new GridPane();
@@ -52,7 +54,6 @@ public class QueryRunner {
 
   public static void loadMatchedDocuments(String document) {
     List<String> documents = new ArrayList<String>(Arrays.asList(document.split(",")));
-    matchedDocuments.clear();
     matchedDocuments.setTokens((ArrayList<String>) documents);
   }
 
@@ -79,6 +80,10 @@ public class QueryRunner {
       tokensList.getChildren().addAll(documentName, documentsNumber, matchedDocuments.getTokensContainer());
       counter++;
     }
+  }
+
+  public static void clearMatchedDocuments() {
+    matchedDocuments.clear();
   }
 
   public GridPane getQueryRunnerContainer() {

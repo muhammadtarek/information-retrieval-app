@@ -12,13 +12,14 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DocsNavigator {
 
     private static DocsNavigator instance;
     private ArrayList<Document> documents;
     private FileChooser fileChooser;
-    private File file;
+    private List<File> files;
     private GridPane docsList;
     private GridPane docsNavigatorContainer;
 
@@ -94,22 +95,25 @@ public class DocsNavigator {
     }
 
     private void chooseNewFile() throws IOException {
-        file = fileChooser.showOpenDialog(null);
+        files = fileChooser.showOpenMultipleDialog(null);
 
-        if (file != null) {
+        if (files != null) {
+            for (File file : files) {
 
-            try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()))) {
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
+                try (BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()))) {
+                    StringBuilder sb = new StringBuilder();
+                    String line = br.readLine();
 
-                while (line != null) {
-                    sb.append(line);
-                    sb.append(System.lineSeparator());
-                    line = br.readLine();
+                    while (line != null) {
+                        sb.append(line);
+                        sb.append(System.lineSeparator());
+                        line = br.readLine();
+                    }
+                    String fileContent = sb.toString();
+                    this.addNewDocument(file.getName(), fileContent);
                 }
-                String fileContent = sb.toString();
-                this.addNewDocument(file.getName(), fileContent);
             }
+
         }
     }
 

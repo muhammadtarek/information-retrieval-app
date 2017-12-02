@@ -74,6 +74,16 @@
     -fx-background-radius: 4px;
 }
 
-.search-bar {
 
+.search-bar {
+    -fx-border-radius: 4px;
+    -fx-padding: 12px;
+    -fx-min-height: 30px;
+    -fx-font-size: 16px;
+    -fx-outline: none;
+    -fx-focus-color: transparent;
+    -fx-background-color: #fff;
+    -fx-border-color: #637282;
+    -fx-color: #637282;
+    -fx-font-weight: 400;
 }

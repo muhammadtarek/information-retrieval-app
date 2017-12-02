@@ -27,6 +27,7 @@ public class SearchBar {
     search.getStyleClass().add("search-bar");
     search.setOnKeyReleased(e ->
     {
+      QueryRunner.clearMatchedDocuments();
       String searchQuery = search.getText();
       searchQuery = searchQuery.replaceAll("[()]", "").toLowerCase();
       List<String> myList = new ArrayList<String>(Arrays.asList(searchQuery.split(" ")));
@@ -38,8 +39,10 @@ public class SearchBar {
 
       if (e.getCode().equals(KeyCode.ENTER))
       {
-          //System.out.println("manipulated query: " + invertedIndex.manipulateQuery(searchQuery));  
-        QueryRunner.loadMatchedDocuments(SimpleBooleanEvaluator.booleanResult(invertedIndex.manipulateQuery(searchQuery)));
+        String matchedDocuments = invertedIndex.manipulateQuery(searchQuery);
+        if (matchedDocuments != null) {
+          QueryRunner.loadMatchedDocuments(SimpleBooleanEvaluator.booleanResult(matchedDocuments));
+        }
       }
     });
   }
